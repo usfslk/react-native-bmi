@@ -4,8 +4,10 @@
     "slug": "bmi-calculator",
     "description": "Feedback on Body mass index (BMI) to measure body fat based on height and weight: Height(inches) and Mass(Pound). Learn more about what the number means and risk factors here: https://www.nhlbi.nih.gov/health/educational/lose_wt/risk.html",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
@@ -17,9 +19,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cuttingties.bmi-calculator"
     }
   }
 }
