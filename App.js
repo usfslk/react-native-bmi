@@ -9,8 +9,17 @@ import {
   Keyboard,
   Switch,
   StatusBar,
-  Platform
+  Platform,
+  Dimensions
 } from "react-native";
+import Speedometer, {
+  Background,
+  Arc,
+  Needle,
+  Progress,
+  Marks,
+  Indicator,
+} from "react-native-cool-speedometer";
 
 export default class App extends React.Component {
   state = {
@@ -27,10 +36,11 @@ export default class App extends React.Component {
 
   handleCalculate = () => {
     Keyboard.dismiss();
-    
+
     if (this.state.metric) {
       // [weight (kg) / height (cm) / height (cm)] x 10,000
-      let imc = (this.state.mass / this.state.height / this.state.height) * 10000
+      let imc =
+        (this.state.mass / this.state.height / this.state.height) * 10000;
       this.setState({
         resultNumber: imc.toFixed(2),
       });
@@ -58,12 +68,10 @@ export default class App extends React.Component {
         this.setState({ resultText: "Obesity" });
       }
     }
-
-   
   };
 
   render() {
-    let { metric } = this.state;
+    let { metric, resultText, resultNumber } = this.state;
     return (
       <ImageBackground
         source={require("./assets/bg.png")}
@@ -73,31 +81,30 @@ export default class App extends React.Component {
         <View style={styles.container}>
           <Text
             style={{
-              color: "#FFCB1F",
+              color: "lightgray",
               justifyContent: "center",
               alignSelf: "center",
               marginTop: 30,
               fontSize: 15,
+              fontWeight: "bold",
             }}
           >
             BMI Calculator
           </Text>
+
           <Text style={styles.mode}>{metric ? "Metric" : "Imperial"}</Text>
           <Switch
             trackColor={{ false: "gray", true: "gray" }}
-            thumbColor={metric ? "#FFCB1F" : "#fff"}
+            thumbColor={metric ? "lightgray" : "#fff"}
             ios_backgroundColor="#3e3e3e"
             onValueChange={this.toggleSwitch}
             value={metric}
             style={{ alignSelf: "center" }}
           />
-          <View style={styles.intro}>
-            <Text style={styles.unit}>{metric ? "(cm)" : "(in)"}</Text>
-            <Text style={styles.unit}>{metric ? "(kg)" : "(lbs)"}</Text>
-          </View>
+
           <View style={styles.intro}>
             <TextInput
-              placeholderTextColor={"#FFCB1F"}
+              placeholderTextColor={"lightgray"}
               placeholder="Height"
               keyboardType="numeric"
               style={styles.input}
@@ -106,7 +113,7 @@ export default class App extends React.Component {
               }}
             />
             <TextInput
-              placeholderTextColor={"#FFCB1F"}
+              placeholderTextColor={"lightgray"}
               placeholder="Mass"
               keyboardType="numeric"
               style={styles.input}
@@ -115,22 +122,53 @@ export default class App extends React.Component {
               }}
             />
           </View>
+          <View style={styles.intro}>
+            <Text style={styles.unit}>{metric ? "(cm)" : "(in)"}</Text>
+            <Text style={styles.unit}>{metric ? "(kg)" : "(lbs)"}</Text>
+          </View>
 
           <TouchableOpacity
             style={styles.button}
             onPress={this.handleCalculate}
           >
-            <Text style={styles.buttonText}>Calculate </Text>
+            <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
-          <Text style={styles.result}>{this.state.resultNumber}</Text>
-          <Text style={[styles.result, { fontSize: 35 }]}>
-            {this.state.resultText}
+          <Text style={styles.result}>{resultNumber}</Text>
+          <Text style={[styles.result, { fontSize: 25, fontWeight: "bold" }]}>
+            {resultText}
           </Text>
+        </View>
+
+        <View
+          style={{
+            alignItems: "center",
+            flex: 1,
+            justifyContent: "flex-end",
+            // backgroundColor: "black",
+          }}
+        >
+          <Speedometer
+            value={resultNumber}
+            max={40}
+            angle={180}
+            accentColor="lightgray"
+            width={200}
+            style={{backgroundColor: 'red'}}
+          >
+            <Background angle={180} />
+            <Arc />
+            <Needle />
+            <Progress />
+            <Marks />
+          </Speedometer>
         </View>
       </ImageBackground>
     );
   }
 }
+
+const width = Dimensions.get('window').width;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -145,26 +183,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "50%",
     fontSize: 40,
-    color: "#FFCB1F",
+    color: "lightgray",
   },
-  button: {
-    backgroundColor: "#1D1D1B",
+  button: { 
+    width: width/2,
   },
   buttonText: {
-    alignSelf: "center",
+    // textAlign: "center",
     padding: 14,
-    fontSize: 25,
-    color: "#FFCB1F",
-    fontWeight: "bold",
-    backgroundColor: 'rgba(52, 52, 52, 0.25)',
-    borderRadius: 7,
-
+    fontSize: 20,
+    color: "#111",
+    backgroundColor: "#fff",
+    borderRadius: 99,
   },
   result: {
     alignSelf: "center",
     color: "lightgray",
     fontSize: 65,
-    padding: 15,
+    marginTop: 7,
   },
   unit: {
     color: "lightgray",
@@ -178,6 +214,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 15,
     fontWeight: "bold",
-    marginBottom: Platform.OS === 'ios' ? 14 : 0
+    marginBottom: Platform.OS === "ios" ? 14 : 0,
   },
 });
+
