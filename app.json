@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Body Mass Index Calculator",
-    "slug": "bmi-calculator",
+    "name": "Minimal BMI Calculator",
+    "slug": "minimal-bmi-calculator",
     "description": "Feedback on Body mass index (BMI) to measure body fat based on height and weight: Height(inches) and Mass(Pound). Learn more about what the number means and risk factors here: https://www.nhlbi.nih.gov/health/educational/lose_wt/risk.html",
     "privacy": "public",
     "platforms": [
@@ -25,6 +25,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cuttingties.bmi-calculator"
+    },
+    "android": {
+      "package": "com.cuttingties.bmicalculator"
     }
   }
 }
