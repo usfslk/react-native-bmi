@@ -1,3 +1,6 @@
+// Youssef Selkani
+// 2022
+
 import React from "react";
 import {
   StyleSheet,
@@ -10,7 +13,7 @@ import {
   Switch,
   StatusBar,
   Platform,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import Speedometer, {
   Background,
@@ -18,14 +21,13 @@ import Speedometer, {
   Needle,
   Progress,
   Marks,
-  Indicator,
 } from "react-native-cool-speedometer";
 
 export default class App extends React.Component {
   state = {
     height: 0,
     mass: 0,
-    resultNumber: 0,
+    resultNumber: null,
     resultText: "",
     metric: false,
   };
@@ -38,7 +40,6 @@ export default class App extends React.Component {
     Keyboard.dismiss();
 
     if (this.state.metric) {
-      // [weight (kg) / height (cm) / height (cm)] x 10,000
       let imc =
         (this.state.mass / this.state.height / this.state.height) * 10000;
       this.setState({
@@ -89,7 +90,7 @@ export default class App extends React.Component {
               fontWeight: "bold",
             }}
           >
-            BMI Calculator
+            Minimal BMI Calculator
           </Text>
 
           <Text style={styles.mode}>{metric ? "Metric" : "Imperial"}</Text>
@@ -101,8 +102,12 @@ export default class App extends React.Component {
             value={metric}
             style={{ alignSelf: "center" }}
           />
-
           <View style={styles.intro}>
+            <Text style={styles.unit}>{metric ? "(cm)" : "(in)"}</Text>
+            <Text style={styles.unit}>{metric ? "(kg)" : "(lbs)"}</Text>
+          </View>
+
+          <View style={[styles.intro, { marginVertical: 14 }]}>
             <TextInput
               placeholderTextColor={"lightgray"}
               placeholder="Height"
@@ -122,10 +127,6 @@ export default class App extends React.Component {
               }}
             />
           </View>
-          <View style={styles.intro}>
-            <Text style={styles.unit}>{metric ? "(cm)" : "(in)"}</Text>
-            <Text style={styles.unit}>{metric ? "(kg)" : "(lbs)"}</Text>
-          </View>
 
           <TouchableOpacity
             style={styles.button}
@@ -133,42 +134,51 @@ export default class App extends React.Component {
           >
             <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
-          <Text style={styles.result}>{resultNumber}</Text>
-          <Text style={[styles.result, { fontSize: 25, fontWeight: "bold" }]}>
-            {resultText}
-          </Text>
-        </View>
 
-        <View
-          style={{
-            alignItems: "center",
-            flex: 1,
-            justifyContent: "flex-end",
-            // backgroundColor: "black",
-          }}
-        >
-          <Speedometer
-            value={resultNumber}
-            max={40}
-            angle={180}
-            accentColor="lightgray"
-            width={200}
-            style={{backgroundColor: 'red'}}
-          >
-            <Background angle={180} />
-            <Arc />
-            <Needle />
-            <Progress />
-            <Marks />
-          </Speedometer>
+          {resultNumber !== null && (
+            <View>
+              <Text style={styles.result}>{resultNumber}</Text>
+              <Text
+                style={[styles.result, { fontSize: 25, fontWeight: "bold" }]}
+              >
+                {resultText}
+              </Text>
+              <View
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 24,
+                  marginBottom: 24,
+                }}
+              >
+                <Speedometer
+                  value={resultNumber}
+                  max={40}
+                  angle={180}
+                  accentColor="lightgray"
+                  width={180}
+                  height={110}
+                >
+                  <Background angle={180} />
+                  <Arc />
+                  <Needle />
+                  <Progress />
+                  <Marks />
+                </Speedometer>
+              </View>
+              <Text style={styles.text}>Less than 18.5 = Underweight</Text>
+              <Text style={styles.text}>18.5–24.9 = Normal weight</Text>
+              <Text style={styles.text}>25–29.9 = Overweight</Text>
+              <Text style={styles.text}>30 or greater = Obesity</Text>
+            </View>
+          )}
         </View>
       </ImageBackground>
     );
   }
 }
 
-const width = Dimensions.get('window').width;
-
+const width = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
@@ -179,22 +189,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   input: {
-    height: 80,
     textAlign: "center",
     width: "50%",
-    fontSize: 40,
+    fontSize: 44,
     color: "lightgray",
   },
-  button: { 
-    width: width/2,
+  text: {
+    textAlign: "center",
+    fontSize: 14,
+    color: "#fff",
+  },
+  button: {
+    width: width / 2,
+    marginLeft: width / 4,
+    borderRadius: 99,
+    backgroundColor: "#000",
+    borderColor: "gray",
+    borderWidth: 2,
+    marginVertical: 14,
   },
   buttonText: {
-    // textAlign: "center",
+    textAlign: "center",
     padding: 14,
     fontSize: 20,
-    color: "#111",
-    backgroundColor: "#fff",
-    borderRadius: 99,
+    color: "#fff",
   },
   result: {
     alignSelf: "center",
@@ -206,6 +224,8 @@ const styles = StyleSheet.create({
     color: "lightgray",
     width: "50%",
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 12,
   },
   mode: {
     color: "lightgray",
@@ -217,4 +237,3 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === "ios" ? 14 : 0,
   },
 });
-
