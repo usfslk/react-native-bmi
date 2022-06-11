@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cuttingties.bmi-calculator",
-      "buildNumber" : 2.1
+      "buildNumber" : "2.1"
     },
     "android": {
       "package": "com.cuttingties.bmicalculator",
