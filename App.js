@@ -25,8 +25,8 @@ import Speedometer, {
 
 export default class App extends React.Component {
   state = {
-    height: 0,
-    mass: 0,
+    height: null,
+    mass: null,
     resultNumber: null,
     resultText: "",
     metric: false,
@@ -37,42 +37,47 @@ export default class App extends React.Component {
   };
 
   handleCalculate = () => {
+    let { mass, height } = this.state;
     Keyboard.dismiss();
 
-    if (this.state.metric) {
-      let imc =
-        (this.state.mass / this.state.height / this.state.height) * 10000;
-      this.setState({
-        resultNumber: imc.toFixed(2),
-      });
-      if (imc < 18.5) {
-        this.setState({ resultText: "Underweight" });
-      } else if (imc > 18.5 && imc < 25) {
-        this.setState({ resultText: "Normal Weight" });
-      } else if (imc >= 25 && imc < 30) {
-        this.setState({ resultText: "Overweight" });
-      } else {
-        this.setState({ resultText: "Obesity" });
-      }
+    if (mass === null || height === null) {
+      this.setState({ error: "missing input" });
     } else {
-      let imc = (this.state.mass * 703) / this.state.height ** 2;
-      this.setState({
-        resultNumber: imc.toFixed(2),
-      });
-      if (imc < 18.5) {
-        this.setState({ resultText: "Underweight" });
-      } else if (imc > 18.5 && imc < 25) {
-        this.setState({ resultText: "Normal Weight" });
-      } else if (imc >= 25 && imc < 30) {
-        this.setState({ resultText: "Overweight" });
+      if (this.state.metric) {
+        this.setState({ error: null });
+        let imc = (mass / height / height) * 10000;
+        this.setState({
+          resultNumber: imc.toFixed(2),
+        });
+        if (imc < 18.5) {
+          this.setState({ resultText: "Underweight" });
+        } else if (imc > 18.5 && imc < 25) {
+          this.setState({ resultText: "Normal Weight" });
+        } else if (imc >= 25 && imc < 30) {
+          this.setState({ resultText: "Overweight" });
+        } else {
+          this.setState({ resultText: "Obesity" });
+        }
       } else {
-        this.setState({ resultText: "Obesity" });
+        let imc = (mass * 703) / height ** 2;
+        this.setState({
+          resultNumber: imc.toFixed(2),
+        });
+        if (imc < 18.5) {
+          this.setState({ resultText: "Underweight" });
+        } else if (imc > 18.5 && imc < 25) {
+          this.setState({ resultText: "Normal Weight" });
+        } else if (imc >= 25 && imc < 30) {
+          this.setState({ resultText: "Overweight" });
+        } else {
+          this.setState({ resultText: "Obesity" });
+        }
       }
     }
   };
 
   render() {
-    let { metric, resultText, resultNumber } = this.state;
+    let { metric, resultText, resultNumber, error } = this.state;
     return (
       <ImageBackground
         source={require("./assets/bg.jpg")}
@@ -92,6 +97,7 @@ export default class App extends React.Component {
           >
             Minimal BMI Calculator
           </Text>
+
 
           <Text style={styles.mode}>{metric ? "Metric" : "Imperial"}</Text>
           <Switch
@@ -127,6 +133,8 @@ export default class App extends React.Component {
               }}
             />
           </View>
+          {error && <Text style={styles.error}>Error: {error}</Text>}
+
 
           <TouchableOpacity
             style={styles.button}
@@ -198,6 +206,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     color: "#fff",
+  },
+  error: {
+    textAlign: "center",
+    fontSize: 14,
+    color: "#fff",
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    margin: 28,
+    padding: 14,
   },
   button: {
     width: width / 2,
