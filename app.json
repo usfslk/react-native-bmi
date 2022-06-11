@@ -24,12 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-<<<<<<< HEAD
       "bundleIdentifier": "com.cuttingties.bmi-calculator",
       "buildNumber" : "2.1"
-=======
-      "bundleIdentifier": "com.cuttingties.bmi-calculator"
->>>>>>> parent of 6243c52 (2.1)
     },
     "android": {
       "package": "com.cuttingties.bmicalculator",
