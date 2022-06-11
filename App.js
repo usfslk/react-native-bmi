@@ -98,7 +98,6 @@ export default class App extends React.Component {
             Minimal BMI Calculator
           </Text>
 
-
           <Text style={styles.mode}>{metric ? "Metric" : "Imperial"}</Text>
           <Switch
             trackColor={{ false: "gray", true: "gray" }}
@@ -133,8 +132,6 @@ export default class App extends React.Component {
               }}
             />
           </View>
-          {error && <Text style={styles.error}>Error: {error}</Text>}
-
 
           <TouchableOpacity
             style={styles.button}
@@ -142,6 +139,8 @@ export default class App extends React.Component {
           >
             <Text style={styles.buttonText}>Calculate</Text>
           </TouchableOpacity>
+
+          {error && <Text style={styles.error}>Error: {error}</Text>}
 
           {resultNumber !== null && (
             <View>
@@ -211,9 +210,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     color: "#fff",
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    margin: 28,
-    padding: 14,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    marginTop: 14,
+    paddingVertical: 14,
   },
   button: {
     width: width / 2,
