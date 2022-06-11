@@ -75,7 +75,7 @@ export default class App extends React.Component {
     let { metric, resultText, resultNumber } = this.state;
     return (
       <ImageBackground
-        source={require("./assets/bg.jpg")}
+        source={require("./assets/bg.png")}
         style={{ width: "100%", height: "100%" }}
       >
         <StatusBar mode="light-content" />

@@ -12,7 +12,7 @@
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.jpg",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,12 +24,16 @@
     ],
     "ios": {
       "supportsTablet": true,
+<<<<<<< HEAD
       "bundleIdentifier": "com.cuttingties.bmi-calculator",
       "buildNumber" : "2.1"
+=======
+      "bundleIdentifier": "com.cuttingties.bmi-calculator"
+>>>>>>> parent of 6243c52 (2.1)
     },
     "android": {
       "package": "com.cuttingties.bmicalculator",
-      "versionCode": 2.1
+      "versionCode": 2 
     }
   }
 }
