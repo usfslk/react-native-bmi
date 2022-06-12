@@ -22,6 +22,7 @@ import Speedometer, {
   Progress,
   Marks,
 } from "react-native-cool-speedometer";
+import Info from './comps/Info.js'
 
 export default class App extends React.Component {
   state = {
@@ -173,10 +174,9 @@ export default class App extends React.Component {
                   <Marks />
                 </Speedometer>
               </View>
-              <Text style={styles.text}>Less than 18.5 = Underweight</Text>
-              <Text style={styles.text}>18.5–24.9 = Normal weight</Text>
-              <Text style={styles.text}>25–29.9 = Overweight</Text>
-              <Text style={styles.text}>30 or greater = Obesity</Text>
+
+              <Info />
+              
             </View>
           )}
         </View>
@@ -200,11 +200,6 @@ const styles = StyleSheet.create({
     width: "50%",
     fontSize: 44,
     color: "lightgray",
-  },
-  text: {
-    textAlign: "center",
-    fontSize: 14,
-    color: "#fff",
   },
   error: {
     textAlign: "center",
